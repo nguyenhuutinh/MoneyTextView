@@ -1,10 +1,31 @@
-// Add the maven-publish plugin
 plugins {
-    id 'maven-publish'
+    id 'com.android.library'
+    id 'maven-publish'  // Add maven-publish plugin here
 }
 
-version = libraryVersion
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 3
+        versionName "1.1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+// Define tasks for sources and Javadoc jars in build.gradle
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
         archiveClassifier.set('sources')
@@ -27,6 +48,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+// Configure the maven-publish plugin
 publishing {
     publications {
         mavenJava(MavenPublication) {
