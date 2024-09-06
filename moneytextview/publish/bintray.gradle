@@ -25,7 +25,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.release
+            from components["release"]  // Corrected to use the components["release"] syntax
 
             // Add sources and Javadoc artifacts
             artifact sourcesJar
