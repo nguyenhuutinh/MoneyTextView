@@ -1,15 +1,15 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'  // Ensure this is added
+    id 'maven-publish'  // Make sure maven-publish is added
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 30  // Use a more recent SDK version
+    // Remove the deprecated buildToolsVersion line
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 30  // Use a more recent target SDK version
         versionCode 3
         versionName "1.1.0"
     }
@@ -22,13 +22,12 @@ android {
 }
 
 dependencies {
-    // Replace deprecated configuration
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-// Remove or replace deprecated plugins and make them compatible with Gradle 7.0.2
+// Ensure compatibility with maven-publish
 apply from: 'publish/config.gradle'
-//apply from: 'publish/install.gradle'
+//apply from: 'publish/install.gradle'  // Ensure this is compatible or remove
 
-// Remove the deprecated bintray.gradle script if using JitPack or consider replacing with maven-publish
+// Remove deprecated bintray.gradle or replace it with maven-publish settings
 apply from: 'publish/bintray.gradle'
