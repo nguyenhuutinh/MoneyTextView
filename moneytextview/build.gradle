@@ -1,8 +1,4 @@
-
 apply plugin: 'com.android.library'
-
-
-
 
 android {
     compileSdkVersion 25
@@ -23,10 +19,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    // Replace deprecated configuration
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
+// Remove or replace deprecated plugins and make them compatible with Gradle 7.0.2
 apply from: 'publish/config.gradle'
 apply from: 'publish/install.gradle'
+
+// Remove the deprecated bintray.gradle script if using JitPack or consider replacing with maven-publish
 apply from: 'publish/bintray.gradle'
