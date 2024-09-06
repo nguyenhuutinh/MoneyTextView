@@ -25,7 +25,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components["android"]  // Correct this line
+            from components.release  // Correct this line
 
             // Add sources and Javadoc artifacts
             artifact sourcesJar
