@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'  // Make sure maven-publish is added
+    id 'maven-publish'  // Ensure this is added
 }
 
 android {
@@ -25,9 +25,82 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-// Ensure compatibility with maven-publish
+// Define tasks for sources and Javadoc jars
+if (project.hasProperty("android")) { // Android libraries
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set('sources')
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+} else { // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        archiveClassifier.set('sources')
+        from sourceSets.main.allSource
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+
+// Configure the maven-publish plugin directly in build.gradle
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            afterEvaluate {
+                from components.release  // Correctly reference the Android release component
+
+                // Add sources and Javadoc artifacts
+                artifact sourcesJar
+                artifact javadocJar
+
+                groupId = 'com.github.nguyenhuutinh'  // Replace with your group ID
+                artifactId = 'moneytextview'          // Replace with your artifact ID
+                version = libraryVersion
+
+                pom {
+                    name.set(libraryName)
+                    description.set(libraryDescription)
+                    url.set(siteUrl)
+
+                    licenses {
+                        license {
+                            name.set(licenseName)
+                            url.set(licenseUrl)
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set(developerId)
+                            name.set(developerName)
+                            email.set(developerEmail)
+                        }
+                    }
+                    scm {
+                        connection.set(gitUrl)
+                        developerConnection.set(gitUrl)
+                        url.set(siteUrl)
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("$buildDir/repo")
+        }
+    }
+}
+
+// Apply other scripts only if they are compatible and necessary
 apply from: 'publish/config.gradle'
 //apply from: 'publish/install.gradle'  // Ensure this is compatible or remove
 
-// Remove deprecated bintray.gradle or replace it with maven-publish settings
-apply from: 'publish/bintray.gradle'
+// Remove or comment out the deprecated bintray.gradle script
+//apply from: 'publish/bintray.gradle'
