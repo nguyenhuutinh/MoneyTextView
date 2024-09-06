@@ -25,7 +25,7 @@ dependencies {
 
 // Remove or replace deprecated plugins and make them compatible with Gradle 7.0.2
 apply from: 'publish/config.gradle'
-apply from: 'publish/install.gradle'
+//apply from: 'publish/install.gradle'
 
 // Remove the deprecated bintray.gradle script if using JitPack or consider replacing with maven-publish
 apply from: 'publish/bintray.gradle'
