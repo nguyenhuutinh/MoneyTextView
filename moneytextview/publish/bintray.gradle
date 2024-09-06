@@ -23,6 +23,11 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 publishing {
+    singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+    }
+
     publications {
         mavenJava(MavenPublication) {
             from components.release  // Correct this line
