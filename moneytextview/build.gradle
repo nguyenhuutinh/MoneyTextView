@@ -19,6 +19,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    // Publishing configuration for Android variants
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+
+        // Uncomment if you want to publish multiple variants
+        // multipleVariants {
+        //     withSourcesJar()
+        //     withJavadocJar()
+        //     allVariants()
+        // }
+    }
 }
 
 dependencies {
