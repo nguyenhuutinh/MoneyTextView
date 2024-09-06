@@ -8,8 +8,8 @@ ext {
 
     libraryDescription = 'A custom Android TextView to display amounts of money in different formats'
 
-    siteUrl = 'https://github.com/fabiomsr/MoneyTextView'
-    gitUrl = 'https://github.com/fabiomsr/MoneyTextView.git'
+    siteUrl = 'https://github.com/nguyenhuutinh/MoneyTextView'
+    gitUrl = 'https://github.com/nguyenhuutinh/MoneyTextView.git'
 
     libraryVersion = '1.1.0'
 
